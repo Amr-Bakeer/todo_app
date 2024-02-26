@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/features/settings_provider.dart';
 
 class TaskItemWidget extends StatelessWidget {
   const TaskItemWidget({super.key});
@@ -7,6 +9,7 @@ class TaskItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
     var theme = Theme.of(context);
+    var vm = Provider.of<SettingsProvider>(context);
 
     return Container(
       width: mediaQuery.width,
@@ -20,7 +23,7 @@ class TaskItemWidget extends StatelessWidget {
         vertical: 10,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: vm.isDark() ? const Color(0xff141922) : Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
@@ -52,17 +55,20 @@ class TaskItemWidget extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.alarm,
                     size: 20,
+                    color: vm.isDark() ? Colors.white : Colors.black,
                   ),
                   const SizedBox(
                     width: 5,
                   ),
                   Text(
                     "10:30 AM",
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(fontWeight: FontWeight.w500),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: vm.isDark() ? Colors.white : Colors.black,
+                    ),
                   ),
                 ],
               ),

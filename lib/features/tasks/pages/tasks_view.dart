@@ -64,11 +64,12 @@ class _TasksViewState extends State<TasksView> {
                     color: theme.primaryColor,
                   ),
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: theme.primaryColor,
-                      )),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: theme.primaryColor,
+                    ),
+                  ),
                 ),
                 todayStyle: DayStyle(
                   dayNumStyle: theme.textTheme.bodyMedium?.copyWith(
@@ -83,6 +84,9 @@ class _TasksViewState extends State<TasksView> {
                   decoration: BoxDecoration(
                     color: theme.primaryColor,
                     borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
