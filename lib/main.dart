@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     var vm = Provider.of<SettingsProvider>(context);
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ToDo App',
       debugShowCheckedModeBanner: false,
       themeMode: vm.currentTheme,
       theme: ApplicationThemeManager.lightTheme,
