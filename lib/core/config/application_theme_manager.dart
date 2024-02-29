@@ -6,6 +6,15 @@ class ApplicationThemeManager {
   static ThemeData lightTheme = ThemeData(
     primaryColor: primaryColor,
     scaffoldBackgroundColor: const Color(0xffdfecdb),
+    appBarTheme: const AppBarTheme(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      centerTitle: true,
+      toolbarHeight: 100,
+      iconTheme: IconThemeData(
+        color: Colors.white,
+      ),
+    ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.transparent,
@@ -36,31 +45,31 @@ class ApplicationThemeManager {
     textTheme: const TextTheme(
       titleLarge: TextStyle(
         fontFamily: "Poppins",
-        fontSize: 22,
+        fontSize: 28,
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
       bodyLarge: TextStyle(
         fontFamily: "Poppins",
-        fontSize: 20,
+        fontSize: 26,
         fontWeight: FontWeight.bold,
         color: Colors.black,
       ),
       bodyMedium: TextStyle(
         fontFamily: "Poppins",
-        fontSize: 18,
+        fontSize: 22,
         fontWeight: FontWeight.bold,
         color: Colors.black,
       ),
       bodySmall: TextStyle(
         fontFamily: "Poppins",
-        fontSize: 14,
+        fontSize: 18,
         fontWeight: FontWeight.w500,
         color: Colors.black,
       ),
       displayLarge: TextStyle(
         fontFamily: "Poppins",
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: FontWeight.bold,
         color: Colors.black,
       ),
@@ -70,6 +79,15 @@ class ApplicationThemeManager {
   static ThemeData darkTheme = ThemeData(
     primaryColor: primaryColor,
     scaffoldBackgroundColor: const Color(0xff060e1e),
+    appBarTheme: const AppBarTheme(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      centerTitle: true,
+      toolbarHeight: 100,
+      iconTheme: IconThemeData(
+        color: Color(0xff060e1e),
+      ),
+    ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.transparent,
@@ -100,31 +118,31 @@ class ApplicationThemeManager {
     textTheme: const TextTheme(
       titleLarge: TextStyle(
         fontFamily: "Poppins",
-        fontSize: 22,
+        fontSize: 28,
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
       bodyLarge: TextStyle(
         fontFamily: "Poppins",
-        fontSize: 20,
+        fontSize: 26,
         fontWeight: FontWeight.bold,
         color: Color(0xff060e1e),
       ),
       bodyMedium: TextStyle(
         fontFamily: "Poppins",
-        fontSize: 18,
+        fontSize: 22,
         fontWeight: FontWeight.bold,
         color: primaryColor,
       ),
       bodySmall: TextStyle(
         fontFamily: "Poppins",
-        fontSize: 14,
+        fontSize: 18,
         fontWeight: FontWeight.w500,
         color: Colors.white,
       ),
       displayLarge: TextStyle(
         fontFamily: "Poppins",
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),

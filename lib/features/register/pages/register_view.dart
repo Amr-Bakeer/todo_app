@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:todo_app/core/services/snack_bar_service.dart';
-import 'package:todo_app/core/widgets/custom_text_field.dart';
 import 'package:todo_app/features/firebaseUtils.dart';
-import 'package:todo_app/features/layout_view.dart';
-import 'package:todo_app/features/register/pages/register_view.dart';
+import 'package:todo_app/features/login/pages/login_view.dart';
 
-class LoginView extends StatelessWidget {
-  static const String routeName = "login";
+import '../../../core/services/snack_bar_service.dart';
+import '../../../core/widgets/custom_text_field.dart';
+
+class RegisterView extends StatelessWidget {
+  static const String routeName = "register";
   final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
-  LoginView({super.key});
+  RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class LoginView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text(
-            "Login",
+            "Create Account",
             style: theme.textTheme.titleLarge,
           ),
         ),
@@ -46,10 +48,19 @@ class LoginView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      "Welcome Back!",
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        fontSize: 25,
+                      "Full Name",
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
                       ),
+                    ),
+                    CustomTextField(
+                      controller: nameController,
+                      keyboardType: TextInputType.text,
+                      hint: "Enter your full name",
+                      suffixWidget: Icon(Icons.person),
+                      onChanged: (value) {
+                        print(nameController.text);
+                      },
                     ),
                     const SizedBox(
                       height: 36,
@@ -64,10 +75,20 @@ class LoginView extends StatelessWidget {
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       hint: "Enter your email address",
-                      suffixWidget: const Icon(Icons.email_outlined),
+                      suffixWidget: const Icon(Icons.email),
+                      onChanged: (value) {
+                        print(emailController.text);
+                      },
                       onValidate: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return "You must enter your email address";
+                          return "you must enter your name";
+                        }
+
+                        var regex = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
+                        if (!regex.hasMatch(value)) {
+                          return "Invalid e-mail address";
                         }
 
                         return null;
@@ -88,9 +109,49 @@ class LoginView extends StatelessWidget {
                       maxLines: 1,
                       hint: "Enter your password",
                       suffixWidget: const Icon(Icons.email_outlined),
+                      onChanged: (value) {
+                        print(passwordController.text);
+                      },
                       onValidate: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return "You must enter your password !";
+                          return "you must enter your password !";
+                        }
+
+                        var regex = RegExp(
+                            r"(?=^.{8,}$)(?=.*[!@#$%^&*]+)(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$");
+
+                        if (!regex.hasMatch(value)) {
+                          return "The password must include at least \n* one lowercase letter, \n* one uppercase letter, \n* one digit, \n* one special character,\n* at least 8 characters long.";
+                        }
+
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 36,
+                    ),
+                    Text(
+                      "Confirm Password",
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    CustomTextField(
+                      controller: confirmPasswordController,
+                      isPassword: true,
+                      maxLines: 1,
+                      hint: "Confirm your password",
+                      suffixWidget: const Icon(Icons.email_outlined),
+                      onChanged: (value) {
+                        print(confirmPasswordController.text);
+                      },
+                      onValidate: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return "the password is not correct.";
+                        }
+
+                        if (value != passwordController.text) {
+                          return "Password not matched";
                         }
 
                         return null;
@@ -103,19 +164,20 @@ class LoginView extends StatelessWidget {
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           FirebaseUtils()
-                              .loginUserAccount(
+                              .createUserAccount(
                             emailController.text,
                             passwordController.text,
                           )
                               .then((value) {
-                            if (value == true) {
+                            if (value) {
                               EasyLoading.dismiss();
                               SnackBarServices.showSuccessMessage(
-                                "Successfully logged in",
+                                "Account successfully created !",
                               );
-                              Navigator.pushReplacementNamed(
+                              Navigator.pushNamedAndRemoveUntil(
                                 context,
-                                LayoutView.routeName,
+                                LoginView.routeName,
+                                (route) => false,
                               );
                             }
                           });
@@ -135,7 +197,7 @@ class LoginView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Login",
+                            "Create Account",
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: Colors.white,
                             ),
@@ -145,26 +207,6 @@ class LoginView extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Text(
-                      "OR",
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        fontSize: 22,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, RegisterView.routeName);
-                      },
-                      child: Text(
-                        "Create new account !",
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.bodySmall,
                       ),
                     ),
                   ],
